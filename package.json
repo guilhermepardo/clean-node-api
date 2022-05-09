@@ -8,10 +8,12 @@
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watchAll -c jest-unit-config.js",
+    "test:unit-verbose": "jest --passWithNoTests --runInBand -c jest-unit-config.js",
     "test:integration": "npm test -- --watchAll -c jest-integration-config.js",
     "test:integration-verbose": "jest --passWithNoTests --runInBand -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage",
+    "test:clear": "jest --clearCache"
   },
   "keywords": [],
   "author": "",
