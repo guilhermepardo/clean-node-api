@@ -23,7 +23,7 @@ const makeAddAccount = (): AddAccount => {
 
 const makeValidation = (): Validation => {
     class ValidationStub implements Validation {
-        validate (input: any): Error {
+        validate(input: any): Error {
             return null
         }
     }
@@ -67,8 +67,22 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Signup Controller', () => {
+    // test('Should return 400 if no name is provided', async () => {
+    //     const { sut } = makeSut()
+    //     const httpRequest = {
+    //         body: {
+    //             email: 'any_email@email.com',
+    //             password: 'any_password',
+    //             passwordConfirmation: 'any_password',
+    //         }
+    //     }
+    //     const httpResponse = await sut.handle(httpRequest)
+    //     expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
+    // })
+
     test('Should return 400 if no name is provided', async () => {
-        const { sut } = makeSut()
+        const { sut, validationStub } = makeSut()
+        jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('name'))
         const httpRequest = {
             body: {
                 email: 'any_email@email.com',
@@ -81,7 +95,8 @@ describe('Signup Controller', () => {
     })
 
     test('Should return 400 if no email is provided', async () => {
-        const { sut } = makeSut()
+        const { sut, validationStub } = makeSut()
+        jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('email'))
         const httpRequest = {
             body: {
                 name: 'any_name',
@@ -94,7 +109,8 @@ describe('Signup Controller', () => {
     })
 
     test('Should return 400 if no password is provided', async () => {
-        const { sut } = makeSut()
+        const { sut, validationStub } = makeSut()
+        jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('password'))
         const httpRequest = {
             body: {
                 name: 'any_name',
@@ -107,7 +123,8 @@ describe('Signup Controller', () => {
     })
 
     test('Should return 400 if no passwordConfirmation is provided', async () => {
-        const { sut } = makeSut()
+        const { sut, validationStub } = makeSut()
+        jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('passwordConfirmation'))
         const httpRequest = {
             body: {
                 name: 'any_name',
@@ -197,5 +214,6 @@ describe('Signup Controller', () => {
         const httpResponse = await sut.handle(makeFakeRequest())
         expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))
     })
+
 
 })
