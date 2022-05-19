@@ -1,37 +1,23 @@
-import { HttpResponse, HttpRequest, Controller, EmailValidator, Validation } from './signup-protocol'
-import { InvalidParamError } from '../../errors'
+import { HttpResponse, HttpRequest, Controller, Validation } from './signup-protocol'
 import { badRequest, serverError, ok } from '../../helpers/http-helper'
 import { AddAccount } from '../../../domain/usecases/add-account'
 
 export class SignUpController implements Controller {
-    private readonly emailValidator: EmailValidator
     private readonly addAccount: AddAccount
     private readonly validation: Validation
 
-    constructor(emailValidator: EmailValidator, addAccount: AddAccount, validation: Validation) {
-        this.emailValidator = emailValidator
+    constructor(addAccount: AddAccount, validation: Validation) {
         this.addAccount = addAccount
         this.validation = validation
     }
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         try {
-
             const error = this.validation.validate(httpRequest.body)
 
-            console.log('error validation :>>', error)
+            if (error) return badRequest(error)
 
-            if (error) {
-                return badRequest(error)
-            }
-
-            const { name, email, password, passwordConfirmation } = httpRequest.body;
-
-            if (password !== passwordConfirmation) return badRequest(new InvalidParamError('passwordConfirmation'))
-
-            const isValid = this.emailValidator.isValid(email)
-
-            if (!isValid) return badRequest(new InvalidParamError('email'))
+            const { name, email, password } = httpRequest.body;
 
             const account = await this.addAccount.add({
                 name,
@@ -39,8 +25,9 @@ export class SignUpController implements Controller {
                 password
             })
 
-            return ok(account)
+            console.log('account :>>', account)
 
+            return ok(account)
         } catch (error) {
             return serverError(error)
         }
