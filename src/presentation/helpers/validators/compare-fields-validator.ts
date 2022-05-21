@@ -7,9 +7,11 @@ export class CompareFieldsValidation implements Validation {
 
     constructor (fieldName: string, fieldToCompareName: string) {
         this.fieldName = fieldName
+        this.fieldToCompareName = fieldToCompareName
     }
 
     validate(input: any): Error {
+        console.log('this.fieldToCompareName :>>', this.fieldToCompareName)
         if(input[this.fieldName] !== input[this.fieldToCompareName]) {
             return new InvalidParamError(this.fieldToCompareName)
         }
