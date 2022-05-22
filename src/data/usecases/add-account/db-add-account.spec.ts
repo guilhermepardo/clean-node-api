@@ -1,5 +1,10 @@
 import { DbAddAccount } from '../add-account/db-add-account'
-import { Encrypter, AccountModel, AddAccountModel, AddAccountRepository } from './db-add-account-protocols'
+import {
+    Encrypter,
+    AccountModel,
+    AddAccountModel,
+    AddAccountRepository
+} from './db-add-account-protocols'
 
 interface SutTypes {
     sut: DbAddAccount
