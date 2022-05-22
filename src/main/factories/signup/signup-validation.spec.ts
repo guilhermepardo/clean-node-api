@@ -1,10 +1,8 @@
 import { makeSignupValidation } from './signup-validation'
-import { ValidationComposite } from '../../../presentation/helpers/validators/validation-composite'
-import { RequiredFieldValidation } from '../../../presentation/helpers/validators/required-field-validation'
-import { Validation } from '../../../presentation/helpers/validators/validation'
-import { CompareFieldsValidation } from '../../../presentation/helpers/validators/compare-fields-validator'
+import { Validation } from '../../../presentation/protocols/validation'
 import { EmailValidator } from '../../../presentation/protocols/email-validator'
-import { EmailValidation } from '../../../presentation/helpers/validators/email-validation'
+import { RequiredFieldValidation, ValidationComposite, CompareFieldsValidation, EmailValidation } from '../../../presentation/helpers/validators/';
+
 
 jest.mock('../../../presentation/helpers/validators/validation-composite')
 
@@ -25,7 +23,7 @@ describe('SignUpValidation Factory', () => {
             validations.push(new RequiredFieldValidation(field))
         }
         validations.push(new CompareFieldsValidation('password', 'passwordConfirmation'))
-        validations.push( new EmailValidation('email', makeEmailValidator()))
+        validations.push(new EmailValidation('email', makeEmailValidator()))
         expect(ValidationComposite).toHaveBeenCalledWith(validations)
     })
 })
