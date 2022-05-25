@@ -7,7 +7,7 @@ exports.MongoHelper = {
     uri: null,
     async connect(uri) {
         this.uri = uri;
-        this.client = await mongodb_1.MongoClient.connect(uri, { useUnifiedTopology: true });
+        this.client = await mongodb_1.MongoClient.connect(uri);
     },
     async disconnect() {
         await this.client.close();
