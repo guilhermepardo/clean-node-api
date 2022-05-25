@@ -5,6 +5,7 @@ import { MongoHelper } from '../helpers/mongo-helper'
 import { map } from './account-mapper'
 import { LoadAccountByEmailRepository } from '../../../../data/protocols/db/account/load-account-by-email-repository'
 import { UpdateAccessTokenRepository } from '../../../../data/protocols/db/account/update-access-token-repository'
+import { ObjectId } from 'mongodb'
 
 export class AccountMongoRepository implements
     AddAccountRepository,
@@ -25,7 +26,7 @@ export class AccountMongoRepository implements
 
     async updateAccessToken(id: string, token: string): Promise<void> {
         const accountCollection = await MongoHelper.getCollection('accounts')
-        await accountCollection.updateOne({ _id: id }, { $set: { accessToken: token } })
+        await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken: token } })
     }
 
 }
