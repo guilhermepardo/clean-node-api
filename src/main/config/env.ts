@@ -1,5 +1,5 @@
 export default {
-    mongoUrl: process.env.MONGO_URL || 'mongodb+srv://admin:2r3g6gxsx459Ie93@cluster0.xdpxo.mongodb.net/db?retryWrites=true&w=majority',
+    mongoUrl: process.env.MONGO_URL || 'mongodb://mongo:27017/clean-node-api',
     port: process.env.PORT || 5050,
     jwtSecret: 'tj670==5H'
 }
